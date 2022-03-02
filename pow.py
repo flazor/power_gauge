@@ -4,7 +4,6 @@ import paho.mqtt.client as mqttClient
 import time
 from blinkstick import blinkstick
 from queue import Queue
-import psutil
 import statistics
 from power_color import color
 
@@ -63,7 +62,7 @@ def on_message(client, userdata, message):
 Connected = False   #global variable for the state of the connection
   
 broker_address= "127.0.0.1"
-port = 1884
+port = 1883
 user = "emonpi"
 password = "emonpimqtt2016"
   
