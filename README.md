@@ -3,12 +3,12 @@ Visualize EmonPi power consumption with Blinkstick
 
 # Dependencies
 
-pip install pyusb
-pip3 install blinkstick
-Fix blinkstick command with 'dos2unix /home/pi/.local/bin/blinkstick`
+* pip install pyusb
+* pip3 install blinkstick
+  * Fix blinkstick command with 'dos2unix /home/pi/.local/bin/blinkstick`
 
-pip install paho-mqtt
-pip install statistics
+* pip install paho-mqtt
+* pip install statistics
 
 # Run Tests
 
