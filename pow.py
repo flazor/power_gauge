@@ -22,7 +22,6 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, message):
-    
     # Get reading
     now_str = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
     power1 = int(message.payload.decode("utf-8"))
@@ -65,12 +64,12 @@ broker_address= "127.0.0.1"
 port = 1883
 user = "emonpi"
 password = "emonpimqtt2016"
-  
+
 client = mqttClient.Client("Python")               #create new instance
 client.username_pw_set(user, password=password)    #set username and password
-client.on_connect= on_connect                      #attach function to callback
-client.on_message= on_message                      #attach function to callback
-  
+client.on_connect = on_connect                     #attach function to callback
+client.on_message = on_message                     #attach function to callback
+
 client.connect(broker_address, port=port)          #connect to broker
 
 bstick = blinkstick.find_first()
@@ -81,13 +80,12 @@ else:
     print ("Displaying Power usage (Blue < 100kW, Green < 200kW...)")
     print ("Press Ctrl+C to exit")
 
-
 client.loop_start()        #start the loop
 
 while Connected != True:    #Wait for connection
     time.sleep(0.1)
 
-client.subscribe("emon/emonpi/power1")
+client.subscribe("emon/emonpi_5/power1")
 
 try:
     while True:
