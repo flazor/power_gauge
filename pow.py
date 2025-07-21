@@ -35,13 +35,13 @@ def safe_blinkstick_operation(operation, *args, **kwargs):
         return False
     
     try:
-        operation(*args, **kwargs)
+        result = operation(bstick, *args, **kwargs)
         return True
     except usb.core.USBError as e:
         print(f"USB error: {e}. Attempting to reconnect BlinkStick...")
         if find_blinkstick():
             try:
-                operation(*args, **kwargs)
+                result = operation(bstick, *args, **kwargs)
                 return True
             except usb.core.USBError as e2:
                 print(f"Reconnection failed: {e2}")
@@ -85,18 +85,18 @@ def on_message(client, userdata, message):
         if (len(bucket) > 0):
             c = statistics.mean(bucket)
             print(f'Bucket {index}: {c} kW is {color(c)}')
-            safe_blinkstick_operation(bstick.set_color, 0, index + 2, hex=color(c))
+            safe_blinkstick_operation(lambda bs: bs.set_color, 0, index + 2, hex=color(c))
 
     # Display current reading
     print(f'NOW: {power1} kW is {color(power1)}')
     if (power1 >= 4000):
-        safe_blinkstick_operation(bstick.pulse, 0, 0, hex=color(power1), repeats=11, duration=1)
+        safe_blinkstick_operation(lambda bs: bs.pulse, 0, 0, hex=color(power1), repeats=11, duration=1)
     elif (power1 >= 3000):
-        safe_blinkstick_operation(bstick.pulse, 0, 0, hex=color(power1), repeats=4, duration=350)
+        safe_blinkstick_operation(lambda bs: bs.pulse, 0, 0, hex=color(power1), repeats=4, duration=350)
     elif (power1 >= 2000):
-        safe_blinkstick_operation(bstick.pulse, 0, 0, hex=color(power1), repeats=2, duration=900)
+        safe_blinkstick_operation(lambda bs: bs.pulse, 0, 0, hex=color(power1), repeats=2, duration=900)
     else:
-        safe_blinkstick_operation(bstick.set_color, 0, 0, hex=color(power1))
+        safe_blinkstick_operation(lambda bs: bs.set_color, 0, 0, hex=color(power1))
 
 
 Connected = False   #global variable for the state of the connection
